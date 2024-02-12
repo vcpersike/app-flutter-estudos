@@ -9,8 +9,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const LoginPage(title: 'Login'),
+    return const MaterialApp(
+      home: LoginPage(title: 'Login'),
     );
   }
 }
@@ -29,9 +29,22 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   void _login() {
+  // Simulação de uma autenticação bem-sucedida
+  final String email = _emailController.text;
+  final String password = _passwordController.text;
 
-    print('Email: ${_emailController.text}, Senha: ${_passwordController.text}');
+  // Implemente sua lógica de autenticação aqui
+  // Se a autenticação for bem-sucedida, navegue para a MenuPage
+  if (email == 'usuario@example.com' && password == 'senha') { // Exemplo de condição
+    Navigator.pushReplacementNamed(context, '/menu');
+  } else {
+    // Mostrar uma mensagem de erro se a autenticação falhar
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Falha na autenticação')),
+    );
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
