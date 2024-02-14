@@ -1,5 +1,7 @@
+import 'package:estudos/views/excel/excel_page.dart';
 import 'package:estudos/views/login/login_page.dart';
 import 'package:estudos/views/menu/menu_page.dart';
+import 'package:estudos/views/pdf/pdf_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +18,9 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const LoginPage(title: 'Login'),
-        '/menu': (context) => MenuPage(), // Adicionando a rota para a página do menu
+        '/menu': (context) => MenuPage(),
+        '/excel': (context) => ExcelPage(),
+        '/pdf':(context) => PdfPage(),
       },
     );
   }

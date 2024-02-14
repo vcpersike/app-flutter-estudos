@@ -29,16 +29,12 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   void _login() {
-  // Simulação de uma autenticação bem-sucedida
   final String email = _emailController.text;
   final String password = _passwordController.text;
 
-  // Implemente sua lógica de autenticação aqui
-  // Se a autenticação for bem-sucedida, navegue para a MenuPage
-  if (email == 'usuario@example.com' && password == 'senha') { // Exemplo de condição
+  if (email == 'usuario@example.com' && password == 'senha') {
     Navigator.pushReplacementNamed(context, '/menu');
   } else {
-    // Mostrar uma mensagem de erro se a autenticação falhar
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Falha na autenticação')),
     );
