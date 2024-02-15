@@ -1,4 +1,7 @@
+import 'package:estudos/views/costumer_service/costumer_service_page.dart';
 import 'package:estudos/views/excel/excel_page.dart';
+import 'package:estudos/views/forms/forms_pages.dart';
+import 'package:estudos/views/graphics/graphics_page.dart';
 import 'package:estudos/views/login/login_page.dart';
 import 'package:estudos/views/menu/menu_page.dart';
 import 'package:estudos/views/pdf/pdf_page.dart';
@@ -21,6 +24,9 @@ class MyApp extends StatelessWidget {
         '/menu': (context) => MenuPage(),
         '/excel': (context) => ExcelPage(),
         '/pdf':(context) => PdfPage(),
+        '/forms':(context) => FormsPage(),
+        '/graphics':(context) => GraphicsPage(),
+        '/customerService': (context) => CustomerServicePage(),
       },
     );
   }
