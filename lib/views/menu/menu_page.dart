@@ -1,12 +1,16 @@
+import 'package:estudos/views/image_upload/image_upload_page.dart';
 import 'package:flutter/material.dart';
 
 class MenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onHorizontalDragEnd: (details) {
-        if (details.primaryVelocity! < 0) {
-          Navigator.pushNamed(context, '/imageUpload');
+      onHorizontalDragUpdate: (details) {
+        if (details.primaryDelta! < -20) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ImageUploadPage()), // Substitua ImageUploadPage pela página específica
+          );
         }
       },
     child: Scaffold(
