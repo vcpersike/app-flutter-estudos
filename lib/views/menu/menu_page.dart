@@ -9,7 +9,7 @@ class MenuPage extends StatelessWidget {
         if (details.primaryDelta! < -20) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ImageUploadPage()), // Substitua ImageUploadPage pela página específica
+            MaterialPageRoute(builder: (context) => ImageUploadPage()),
           );
         }
       },
