@@ -1,3 +1,4 @@
+import 'package:estudos/services/authentication_service.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -28,11 +29,14 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  void _login() {
+void _login() async {
   final String email = _emailController.text;
   final String password = _passwordController.text;
+  final AuthenticationService authService = AuthenticationService();
 
-  if (email == 'usuario@example.com' && password == 'senha') {
+  bool loginSuccess = await authService.login(email, password);
+
+  if (loginSuccess) {
     Navigator.pushReplacementNamed(context, '/menu');
   } else {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -40,6 +44,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
 
 
   @override

@@ -5,9 +5,8 @@ class MenuPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onHorizontalDragEnd: (details) {
-        // Verifica se o gesto foi um arrastar para a esquerda
-        if (details.primaryVelocity! < 0) { // Verifica se a velocidade é negativa, o que indica um arrasto para a esquerda
-          Navigator.pushNamed(context, '/customerService');
+        if (details.primaryVelocity! < 0) {
+          Navigator.pushNamed(context, '/imageUpload');
         }
       },
     child: Scaffold(
@@ -51,25 +50,25 @@ class MenuPage extends StatelessWidget {
 
   Widget buildMenuButton(BuildContext context, {required String label, required IconData icon, required String routeName}) {
     return Container(
-      width: 150, // Largura do botão
-      height: 150, // Altura do botão
-      padding: EdgeInsets.all(8), // Padding dentro do container
+      width: 150,
+      height: 150,
+      padding: EdgeInsets.all(8),
       child: ElevatedButton(
         onPressed: () => Navigator.pushNamed(context, routeName),
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18), // Bordas arredondadas
+            borderRadius: BorderRadius.circular(18),
           ),
-          primary: Colors.white, // Cor de fundo do botão
-          onPrimary: Colors.black, // Cor do texto e ícone para botão em estado ativo (light theme)
-          onSurface: Colors.grey, // Cor do texto e ícone quando o botão está desabilitado
+          primary: Colors.white,
+          onPrimary: Colors.black,
+          onSurface: Colors.grey,
         ),
         child: Column(
-          mainAxisSize: MainAxisSize.min, // Para garantir que os itens fiquem centralizados
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 60, color: Theme.of(context).primaryColor), // Ícone com cor definida
+            Icon(icon, size: 60, color: Theme.of(context).primaryColor),
             SizedBox(height: 8),
-            Text(label, style: TextStyle(color: Theme.of(context).primaryColor)), // Texto com cor definida
+            Text(label, style: TextStyle(color: Theme.of(context).primaryColor)),
           ],
         ),
       ),
