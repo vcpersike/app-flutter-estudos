@@ -1,3 +1,5 @@
+import 'package:estudos/components/footer.dart';
+import 'package:estudos/components/header.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -5,20 +7,29 @@ class GraphicsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Gráficos'),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Gráfico de Pizza
-            buildPieChartCard(context),
-            // Gráfico de Linha
-            buildLineChartCard(context),
-            // Gráfico de Colunas
-            buildBarChartCard(context),
-          ],
-        ),
+      body: Column(
+        children: [
+          SafeArea(
+              child: Padding(
+                padding: EdgeInsets.zero,
+                child: Header(title: 'Gráficos',
+                onBack: () => Navigator.pop(context),
+                ),
+              ),
+            ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  buildPieChartCard(context),
+                  buildLineChartCard(context),
+                  buildBarChartCard(context),
+                ],
+              ),
+            ),
+          ),
+          Footer(),
+        ],
       ),
     );
   }
@@ -36,7 +47,7 @@ class GraphicsPage extends StatelessWidget {
               style: Theme.of(context).textTheme.headline6,
             ),
             SizedBox(
-              height: 200, // Defina a altura que preferir
+              height: 200,
               child: PieChart(
                 PieChartData(
                   sectionsSpace: 2,
@@ -85,7 +96,7 @@ class GraphicsPage extends StatelessWidget {
               style: Theme.of(context).textTheme.headline6,
             ),
             SizedBox(
-              height: 200, // Defina a altura que preferir
+              height: 200,
               child: LineChart(
                 LineChartData(
                   gridData: FlGridData(show: false),
@@ -158,13 +169,16 @@ class GraphicsPage extends StatelessWidget {
                   barGroups: [
                     BarChartGroupData(
                       x: 0,
-                      barRods: [BarChartRodData(toY: 8, color: Colors.lightBlueAccent)],
+                      barRods: [
+                        BarChartRodData(toY: 8, color: Colors.lightBlueAccent)
+                      ],
                     ),
                     BarChartGroupData(
                       x: 1,
-                      barRods: [BarChartRodData(toY: 10, color: Colors.greenAccent)],
+                      barRods: [
+                        BarChartRodData(toY: 10, color: Colors.greenAccent)
+                      ],
                     ),
-                    // Adicione mais BarChartGroupData conforme necessário
                   ],
                 ),
               ),

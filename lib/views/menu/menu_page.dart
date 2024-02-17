@@ -1,3 +1,6 @@
+import 'package:estudos/components/footer.dart';
+import 'package:estudos/components/header.dart';
+import 'package:estudos/components/menu_button.dart';
 import 'package:estudos/views/image_upload/image_upload_page.dart';
 import 'package:flutter/material.dart';
 
@@ -6,73 +9,56 @@ class MenuPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onHorizontalDragUpdate: (details) {
-        if (details.primaryDelta! < -20) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => ImageUploadPage()),
-          );
+        if (details.primaryDelta! > 20) {
+          Navigator.pop(context);
+        } else if (details.primaryDelta! < -20) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => ImageUploadPage()));
         }
       },
-    child: Scaffold(
-      appBar: AppBar(title: Text('Menu')),
-      body: Center(
-        child: Wrap(
-          spacing: 20,
-          runSpacing: 20,
-          alignment: WrapAlignment.center,
+      child: Scaffold(
+        body: Column(
           children: [
-            buildMenuButton(
-              context,
-              label: 'PDF',
-              icon: Icons.picture_as_pdf,
-              routeName: '/pdf',
+            SafeArea(
+              child: Padding(
+                padding: EdgeInsets.zero,
+                child: Header(
+                  title: 'Menu',
+                ),
+              ),
             ),
-            buildMenuButton(
-              context,
-              label: 'Excel',
-              icon: Icons.table_chart,
-              routeName: '/excel',
+            Expanded(
+              child: Center(
+                child: Wrap(
+                  spacing: 20,
+                  runSpacing: 20,
+                  alignment: WrapAlignment.center,
+                  children: [
+                    MenuButton(
+                      label: 'PDF',
+                      icon: Icons.picture_as_pdf,
+                      routeName: '/pdf',
+                    ),
+                    MenuButton(
+                      label: 'Excel',
+                      icon: Icons.table_chart,
+                      routeName: '/excel',
+                    ),
+                    MenuButton(
+                      label: 'Forms',
+                      icon: Icons.format_align_left,
+                      routeName: '/forms',
+                    ),
+                    MenuButton(
+                      label: 'Gráficos',
+                      icon: Icons.pie_chart_outline,
+                      routeName: '/graphics',
+                    ),
+                  ],
+                ),
+              ),
             ),
-            buildMenuButton(
-              context,
-              label: 'Forms',
-              icon: Icons.format_align_left,
-              routeName: '/forms',
-            ),
-            buildMenuButton(
-              context,
-              label: 'Gráficos',
-              icon: Icons.pie_chart_outline,
-              routeName: '/graphics',
-            ),
-          ],
-        ),
-      ),
-    ),
-    );
-  }
-
-  Widget buildMenuButton(BuildContext context, {required String label, required IconData icon, required String routeName}) {
-    return Container(
-      width: 150,
-      height: 150,
-      padding: EdgeInsets.all(8),
-      child: ElevatedButton(
-        onPressed: () => Navigator.pushNamed(context, routeName),
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18),
-          ),
-          primary: Colors.white,
-          onPrimary: Colors.black,
-          onSurface: Colors.grey,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, size: 60, color: Theme.of(context).primaryColor),
-            SizedBox(height: 8),
-            Text(label, style: TextStyle(color: Theme.of(context).primaryColor)),
+            Footer(),
           ],
         ),
       ),
