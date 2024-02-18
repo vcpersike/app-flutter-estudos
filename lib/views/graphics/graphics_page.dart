@@ -14,6 +14,7 @@ class GraphicsPage extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 child: Header(title: 'Gráficos',
                 onBack: () => Navigator.pop(context),
+                onAvatarTap: () => Navigator.pushNamed(context, '/perfil'),
                 ),
               ),
             ),

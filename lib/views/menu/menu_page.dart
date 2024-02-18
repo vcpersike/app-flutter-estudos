@@ -24,6 +24,8 @@ class MenuPage extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 child: Header(
                   title: 'Menu',
+                  onAvatarTap: () => Navigator.pushNamed(context, '/perfil'),
+
                 ),
               ),
             ),

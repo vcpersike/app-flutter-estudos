@@ -33,6 +33,7 @@ class _ImageUploadPageState extends State<ImageUploadPage> {
                 padding: EdgeInsets.zero,
                 child: Header(title: 'Imagem Upload',
                 onBack: () => Navigator.pop(context),
+                onAvatarTap: () => Navigator.pushNamed(context, '/perfil'),
                 ),
               ),
             ),

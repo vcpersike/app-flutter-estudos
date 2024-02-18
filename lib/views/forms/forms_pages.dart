@@ -1,6 +1,7 @@
 import 'package:estudos/components/footer.dart';
 import 'package:estudos/components/header.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class FormsPage extends StatefulWidget {
   @override
@@ -45,11 +46,12 @@ class _FormsPageState extends State<FormsPage> {
     return Scaffold(
       body: Column(
         children: [
-         SafeArea(
+          SafeArea(
               child: Padding(
                 padding: EdgeInsets.zero,
-                child: Header(title: 'Formulário de Cadastro',
+                child: Header(title: 'Formulários',
                 onBack: () => Navigator.pop(context),
+                onAvatarTap: () => Navigator.pushNamed(context, '/perfil'),
                 ),
               ),
             ),
@@ -62,7 +64,7 @@ class _FormsPageState extends State<FormsPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      TextFormField(
+                                            TextFormField(
                         controller: _nameController,
                         decoration: InputDecoration(labelText: 'Nome'),
                         validator: (value) {
@@ -92,9 +94,16 @@ class _FormsPageState extends State<FormsPage> {
                           return null;
                         },
                       ),
+
+                      // Outros TextFormField para Nome, Endereço, CPF
                       TextFormField(
                         controller: _descriptionController,
-                        decoration: InputDecoration(labelText: 'Descrição'),
+                        decoration: InputDecoration(
+                          labelText: 'Descrição',
+                        ),
+                        maxLength: 700,
+                        maxLines: null, // Permite várias linhas
+                        keyboardType: TextInputType.multiline,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Por favor, insira uma descrição';

@@ -3,27 +3,32 @@ import 'package:flutter/material.dart';
 class Header extends StatelessWidget {
   final String title;
   final VoidCallback? onBack;
+  final String? avatarUrl;
+  final VoidCallback? onAvatarTap;
 
-  const Header({Key? key, required this.title, this.onBack}) : super(key: key);
+  const Header({
+    Key? key,
+    required this.title,
+    this.onBack,
+    this.avatarUrl,
+    this.onAvatarTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16.0),
+      padding: EdgeInsets.symmetric(horizontal: 8),
       width: double.infinity,
       color: Theme.of(context).primaryColor,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           if (onBack != null)
-          Container(
-              height: 16,
-              alignment: Alignment.center,
-              child: IconButton(
-                icon: Icon(Icons.arrow_back, color: Colors.white),
-                onPressed: onBack,
-                padding: EdgeInsets.zero,
-                iconSize: 24,
-                alignment: Alignment.center,
+            InkWell(
+              onTap: onBack,
+              child: Padding(
+                padding: EdgeInsets.all(0),
+                child: Icon(Icons.arrow_back, color: Colors.white, size: 24.0),
               ),
             ),
           Expanded(
@@ -36,6 +41,16 @@ class Header extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
+          ),
+          GestureDetector(
+            onTap: onAvatarTap,
+            child: avatarUrl == null
+                ? Icon(Icons.person, color: Colors.white, size: 24.0)
+                : CircleAvatar(
+                    backgroundImage: NetworkImage(avatarUrl!),
+                    radius: 16,
+                    backgroundColor: Colors.grey,
+                  ),
           ),
         ],
       ),
