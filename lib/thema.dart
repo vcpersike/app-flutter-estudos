@@ -9,28 +9,32 @@ ThemeData appTheme() {
     scaffoldBackgroundColor: lightGrey, // Cor de fundo padrão para telas
     colorScheme: ColorScheme.light(
       primary: darkGreen,
-      onPrimary: Colors.white, // Para garantir contraste no AppBar e outros elementos sobre o primaryColor
+      onPrimary: Colors
+          .white, // Para garantir contraste no AppBar e outros elementos sobre o primaryColor
       secondary: Colors.grey,
       onSecondary: Colors.black,
-      surface: lightGrey, // Cor de superfície (usada por padrão em Cards, Drawers, etc.)
+      surface:
+          lightGrey, // Cor de superfície (usada por padrão em Cards, Drawers, etc.)
       onSurface: Colors.black, // Cor do texto/icons em superfícies
-      background: lightGrey, // Cor de fundo geral (pode ser usada como cor de fundo de Scaffold)
+      background:
+          lightGrey, // Cor de fundo geral (pode ser usada como cor de fundo de Scaffold)
       onBackground: darkGreen, // Cor de texto/icons sobre o fundo geral
     ),
     appBarTheme: AppBarTheme(
       color: darkGreen,
       iconTheme: IconThemeData(color: Colors.white),
-      titleTextStyle: TextStyle(color: Colors.white, fontSize: 20), // Estilo do título do AppBar
+      titleTextStyle: TextStyle(
+          color: Colors.white, fontSize: 20), // Estilo do título do AppBar
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        primary: darkGreen, // Cor do texto do botão
+        foregroundColor: darkGreen, // Cor do texto do botão
       ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        primary: darkGreen, // Cor de fundo do botão elevado
-        onPrimary: Colors.white, // Cor do texto/icon no botão elevado
+        foregroundColor: Colors.white,
+        backgroundColor: darkGreen, // Cor do texto/icon no botão elevado
       ),
     ),
     // Configura outros componentes do tema conforme necessário...

@@ -21,19 +21,21 @@ class MenuButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () => Navigator.pushNamed(context, routeName),
         style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
           ),
-          primary: Colors.white,
-          onPrimary: Colors.black,
-          onSurface: Colors.grey,
+          disabledForegroundColor: Colors.grey.withOpacity(0.38),
+          disabledBackgroundColor: Colors.grey.withOpacity(0.12),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(icon, size: 60, color: Theme.of(context).primaryColor),
             SizedBox(height: 8),
-            Text(label, style: TextStyle(color: Theme.of(context).primaryColor)),
+            Text(label,
+                style: TextStyle(color: Theme.of(context).primaryColor)),
           ],
         ),
       ),
