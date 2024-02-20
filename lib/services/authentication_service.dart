@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 class AuthenticationService {
   Future<bool> login(String email, String password) async {
     try {
-      var issuer = await Issuer.discover(Uri.parse('https://<keycloak-url>/realms/<realm>'));
+      var issuer = await Issuer.discover(Uri.parse('https://teste-de-login.caprover.gamboasolutions.com.br/realms/app-teste/broker/keycloak-oidc/endpoint'));
       var client = Client(issuer, '<clientId>');
 
       // Cria um autenticador
@@ -28,7 +28,7 @@ class AuthenticationService {
       // Aqui você pode realizar as verificações necessárias com as informações do usuário
       // Por exemplo, verificar se o e-mail recebido corresponde ao esperado
 
-      return true; // Ou false, dependendo da sua lógica de validação
+      return true;
     } catch (e) {
       print("Erro ao realizar o login: $e");
       return false;
