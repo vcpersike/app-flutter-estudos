@@ -14,6 +14,7 @@ class ExcelPage extends StatelessWidget {
             child: Header(
               title: 'Excel',
               onBack: () => Navigator.pop(context),
+              onAvatarTap: () => Navigator.pushNamed(context, '/perfil'),
             ),
           ),
           Expanded(

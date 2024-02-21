@@ -14,6 +14,7 @@ class PdfPage extends StatelessWidget {
             child: Header(
               title: 'PDF',
               onBack: () => Navigator.pop(context),
+              onAvatarTap: () => Navigator.pushNamed(context, '/perfil'),
             ),
           ),
           Expanded(
