@@ -1,6 +1,8 @@
+import 'package:estudos/components/forms_component.dart';
 import 'package:estudos/components/footer.dart';
 import 'package:estudos/components/header.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class PdfPage extends StatelessWidget {
   @override
@@ -9,17 +11,17 @@ class PdfPage extends StatelessWidget {
       body: Column(
         children: [
           SafeArea(
-              child: Padding(
-                padding: EdgeInsets.zero,
-                child: Header(title: 'PDF',
-                onBack: () => Navigator.pop(context),
-                onAvatarTap: () => Navigator.pushNamed(context, '/perfil'),
-                ),
-              ),
+            child: Header(
+              title: 'PDF',
+              onBack: () => Navigator.pop(context),
             ),
+          ),
           Expanded(
-            child: Center(
-              child: Text('Tela de visualização PDF'),
+            child: DynamicFormComponent(
+              includeFields: ['Nome', 'CPF', 'Endereço', 'Descrição'],
+              onFormSubmit: (Map<String, String> formData) {
+                print("Formulário submetido com os seguintes dados: $formData");
+              },
             ),
           ),
           Footer(),

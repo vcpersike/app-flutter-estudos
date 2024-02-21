@@ -1,6 +1,8 @@
+import 'package:estudos/components/forms_component.dart';
 import 'package:estudos/components/footer.dart';
 import 'package:estudos/components/header.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ExcelPage extends StatelessWidget {
   @override
@@ -9,17 +11,17 @@ class ExcelPage extends StatelessWidget {
       body: Column(
         children: [
           SafeArea(
-              child: Padding(
-                padding: EdgeInsets.zero,
-                child: Header(title: 'Excel',
-                onBack: () => Navigator.pop(context),
-                onAvatarTap: () => Navigator.pushNamed(context, '/perfil'),
-                ),
-              ),
+            child: Header(
+              title: 'Excel',
+              onBack: () => Navigator.pop(context),
             ),
+          ),
           Expanded(
-            child: Center(
-              child: Text('Tela de visualização Excel'),
+            child: DynamicFormComponent(
+              includeFields: ['Nome', 'Telefone'],
+              onFormSubmit: (Map<String, String> formData) {
+                print("Formulário submetido com os seguintes dados: $formData");
+              },
             ),
           ),
           Footer(),
