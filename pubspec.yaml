@@ -10,13 +10,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  intl: ^0.17.0
   cupertino_icons: ^1.0.2
   fl_chart: ^0.66.2
   image_picker: ^1.0.7
   camera: ^0.10.5+9
   openid_client: ^0.4.8
   http: ^1.2.1
+  flutter_masked_text2: ^0.9.1
 
 dev_dependencies:
   flutter_test:
