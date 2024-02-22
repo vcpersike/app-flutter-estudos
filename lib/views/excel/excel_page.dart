@@ -19,7 +19,7 @@ class ExcelPage extends StatelessWidget {
           ),
           Expanded(
             child: DynamicFormComponent(
-              includeFields: ['Nome', 'Telefone', 'Aceitar Termos'],
+              includeFields: ['Nome', 'Telefone', 'Aceitar Termos', 'Data de Nascimento'],
               onFormSubmit: (Map<String, String> formData) {
                 print("Formulário submetido com os seguintes dados: $formData");
               },

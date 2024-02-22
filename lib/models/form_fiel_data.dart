@@ -36,7 +36,6 @@ class FormFieldData {
   TextEditingController get effectiveController =>
       maskedController ?? controller ?? TextEditingController();
 
-  // Factories para criar instâncias específicas de campos
   factory FormFieldData.date({
     required String label,
     required DateTime selectedDate,

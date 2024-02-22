@@ -54,8 +54,6 @@ class _DynamicFormComponentState extends State<DynamicFormComponent> {
   }
 }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Form(
