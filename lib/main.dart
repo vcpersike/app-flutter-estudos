@@ -1,7 +1,8 @@
-// lib/main.dart
+import 'package:flutter/material.dart';
+
 import 'package:estudos/thema.dart';
 import 'package:estudos/views/perfil/perfil_page.dart';
-import 'package:flutter/material.dart';
+
 import 'package:estudos/views/image_upload/image_upload_page.dart';
 import 'package:estudos/views/excel/excel_page.dart';
 import 'package:estudos/views/forms/forms_pages.dart';
@@ -15,13 +16,13 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Seu Aplicativo',
-      theme: appTheme(), // Use o tema personalizado definido em theme.dart
+      theme: appTheme(),
       initialRoute: '/',
       routes: {
         '/': (context) => const LoginPage(title: 'Login'),

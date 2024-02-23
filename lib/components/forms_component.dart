@@ -1,4 +1,5 @@
 import 'package:estudos/models/form_fiel_data.dart';
+import 'package:estudos/models/form_field_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -20,6 +21,7 @@ class DynamicFormComponent extends StatefulWidget {
 class _DynamicFormComponentState extends State<DynamicFormComponent> {
   final _formKey = GlobalKey<FormState>();
   List<FormFieldData> _fields = [];
+  String _selectedGender = 'Masculino';
 
   @override
   void initState() {
@@ -32,54 +34,69 @@ class _DynamicFormComponentState extends State<DynamicFormComponent> {
   }
 
   void _submitForm() {
-  if (_formKey.currentState!.validate()) {
-    Map<String, String> formData = {};
+    if (_formKey.currentState!.validate()) {
+      Map<String, String> formData = {};
+      for (var field in _fields) {
+        if (field.label == FormFieldNames.cpf || field.label == FormFieldNames.telefone) {
+          String unmaskedValue =
+              field.effectiveController.text.replaceAll(RegExp(r'[^0-9]'), '');
+          formData[field.label] = unmaskedValue;
+        } else {
+          formData[field.label] = field.effectiveController.text;
+        }
 
-    for (var field in _fields) {
-      String rawValue = field.effectiveController.text;
-      if (field.label == "CPF" || field.label == "Telefone") {
-        String unmaskedValue = rawValue.replaceAll(RegExp(r'[^0-9]'), '');
-        formData[field.label] = unmaskedValue;
-      } else {
-        formData[field.label] = rawValue;
+        if (field.selectedDate != null) {
+          formData["Data de Nascimento"] =
+              DateFormat('dd-MM-yyyy').format(field.selectedDate!);
+        }
+        if (field.isChecked != null) {
+          formData["isChecked"] = field.isChecked!.toString();
+        }
+        if (field.radioValue != null) {
+          formData["radioValue"] = field.radioValue!;
+        }
+        if (field.radioValue != null) {
+          formData["Etapas de Desenvolvimento"] = field.radioValue!;
+        }
       }
-      if (field.selectedDate != null) {
-        formData["Data de Nascimento"] = DateFormat('dd-MM-yyyy').format(field.selectedDate!);
-      }
-      if (field.isChecked != null) {
-        formData["Aceitar Termos"] = field.isChecked!.toString();
-      }
+      widget.onFormSubmit(formData);
     }
-    widget.onFormSubmit(formData);
   }
-}
 
   @override
   Widget build(BuildContext context) {
+    EdgeInsets buttonPadding = const EdgeInsets.symmetric(vertical: 16.0);
+    bool hasSpecialField = _fields.any((field) => field.isSpecial);
+    if (hasSpecialField) {
+      buttonPadding = const EdgeInsets.symmetric(vertical: 32.0);
+    }
+
     return Form(
       key: _formKey,
       child: Column(
         children: _fields.map<Widget>((FormFieldData field) {
           if (field.radioOptions != null && field.radioValue != null) {
             return Column(
-              children: field.radioOptions!
-                  .map((option) => RadioListTile(
-                        title: Text(option),
-                        value: option,
-                        groupValue: field.radioValue,
-                        onChanged: (String? value) {
-                          setState(() {
-                            field.radioValue = value;
-                          });
-                        },
-                      ))
-                  .toList(),
+              children: [
+                Text(field.label),
+                ...field.radioOptions!
+                    .map((option) => RadioListTile<String>(
+                          title: Text(option),
+                          value: option,
+                          groupValue: field.radioValue,
+                          onChanged: (String? value) {
+                            setState(() {
+                              field.radioValue = value;
+                            });
+                          },
+                        ))
+                    .toList(),
+              ],
             );
           } else if (field.isChecked != null) {
             return CheckboxListTile(
-              title: Text('Aceitar Termos'),
-              value: field
-                  .isChecked,
+              title: Text(field.label),
+              value: field.isChecked,
               onChanged: (bool? value) {
                 setState(() {
                   field.isChecked = value!;
@@ -107,11 +124,26 @@ class _DynamicFormComponentState extends State<DynamicFormComponent> {
             );
           }
         }).toList()
-          ..add(ElevatedButton(
-            onPressed: _submitForm,
-            child: Text('Submit'),
+          ..add(Padding(
+            padding:
+                buttonPadding,
+            child: SizedBox(
+              width: double
+                  .infinity,
+              height: 36.0,
+              child: ElevatedButton(
+                onPressed: _submitForm,
+                child: const Text('Submit'),
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                        8),
+                  ),
+                ),
+              ),
+            ),
           ))
-          ..add(SizedBox.shrink()),
+          ..add(const SizedBox.shrink()),
       ),
     );
   }
@@ -153,11 +185,13 @@ class _DynamicFormComponentState extends State<DynamicFormComponent> {
       ),
       FormFieldData(
         controller: TextEditingController(),
+        mask: "000.000.000-00",
         label: "CPF",
         keyboardType: TextInputType.number,
-        validator: (value) => value != null && value.length == 11
-            ? null
-            : 'CPF deve ter 11 dígitos',
+        validator: (value) {
+          String numericValue = value?.replaceAll(RegExp(r'[^0-9]'), '') ?? '';
+          return numericValue.length == 11 ? null : 'CPF deve ter 11 dígitos';
+        },
       ),
       FormFieldData(
         controller: TextEditingController(),
@@ -181,6 +215,11 @@ class _DynamicFormComponentState extends State<DynamicFormComponent> {
         label: "Gênero",
         options: ["Masculino", "Feminino"],
         radioValue: "Masculino",
+      ),
+      FormFieldData.radio(
+        label: "Etapas de Desenvolvimento",
+        options: ["Front", "Back", "Mobile"],
+        radioValue: "",
       ),
       FormFieldData.checkbox(
         label: "Aceitar Termos",

@@ -18,11 +18,23 @@ class ExcelPage extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: DynamicFormComponent(
-              includeFields: ['Nome', 'Telefone', 'Aceitar Termos', 'Data de Nascimento'],
-              onFormSubmit: (Map<String, String> formData) {
-                print("Formulário submetido com os seguintes dados: $formData");
-              },
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: DynamicFormComponent(
+                includeFields: const [
+                  'Nome',
+                  'Telefone',
+                  'CPF',
+                  'Descrição',
+                  'Aceitar Termos',
+                  'Data de Nascimento',
+                  'Gênero'
+                ],
+                onFormSubmit: (Map<String, String> formData) {
+                  print(
+                      "Formulário submetido com os seguintes dados: $formData");
+                },
+              ),
             ),
           ),
           Footer(),

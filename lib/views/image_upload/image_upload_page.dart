@@ -42,14 +42,14 @@ class _ImageUploadPageState extends State<ImageUploadPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  _image != null ? Image.file(_image!) : Text('Nenhuma imagem selecionada'),
+                  _image != null ? Image.file(_image!) : const Text('Nenhuma imagem selecionada'),
                   ElevatedButton(
                     onPressed: () => pickImage(ImageSource.gallery),
-                    child: Text('Selecionar da Galeria'),
+                    child: const Text('Selecionar da Galeria'),
                   ),
                   ElevatedButton(
                     onPressed: () => pickImage(ImageSource.camera),
-                    child: Text('Tirar uma Foto'),
+                    child: const Text('Tirar uma Foto'),
                   ),
                 ],
               ),

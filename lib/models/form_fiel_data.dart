@@ -16,6 +16,9 @@ class FormFieldData {
   String? radioValue;
   bool? isChecked;
 
+
+  final bool isSpecial;
+
   FormFieldData({
     TextEditingController? controller,
     String? mask,
@@ -29,6 +32,7 @@ class FormFieldData {
     this.radioOptions,
     this.radioValue,
     this.isChecked,
+    this.isSpecial = false,
   })  : this.controller = controller ?? TextEditingController(),
         this.maskedController =
             mask != null ? MaskedTextController(mask: mask) : null;
@@ -40,30 +44,36 @@ class FormFieldData {
     required String label,
     required DateTime selectedDate,
     required Function(DateTime) onDateSelected,
+    bool isSpecial = false,
   }) =>
       FormFieldData(
         label: label,
         selectedDate: selectedDate,
         onDateSelected: onDateSelected,
+        isSpecial: isSpecial,
       );
 
   factory FormFieldData.radio({
     required String label,
     required List<String> options,
     required String radioValue,
+    bool isSpecial = false,
   }) =>
       FormFieldData(
         label: label,
         radioOptions: options,
         radioValue: radioValue,
+        isSpecial: isSpecial,
       );
 
   factory FormFieldData.checkbox({
     required String label,
     required bool isChecked,
+    bool isSpecial = false,
   }) =>
       FormFieldData(
         label: label,
         isChecked: isChecked,
+        isSpecial: isSpecial,
       );
 }

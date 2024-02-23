@@ -18,7 +18,7 @@ class ProfilePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.person, size: 120, color: Theme.of(context).colorScheme.primary),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(
                     'Nome do Usuário',
                     style: Theme.of(context).textTheme.headline6,
@@ -38,7 +38,7 @@ class Header extends StatelessWidget {
   final String title;
   final VoidCallback? onHome;
 
-  const Header({Key? key, required this.title, this.onHome}) : super(key: key);
+  const Header({super.key, required this.title, this.onHome});
 
   @override
   Widget build(BuildContext context) {
@@ -52,17 +52,17 @@ class Header extends StatelessWidget {
           if (onHome != null)
             InkWell(
               onTap: onHome,
-              child: Padding(
+              child: const Padding(
                 padding: EdgeInsets.all(0),
                 child: Icon(Icons.home, color: Colors.white, size: 24.0),
               ),
             ),
           Text(
             title,
-            style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, color: Colors.white),
+            style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, color: Colors.white),
             textAlign: TextAlign.center,
           ),
-          Opacity(opacity: 0, child: Icon(Icons.home, size: 24.0)),
+          const Opacity(opacity: 0, child: Icon(Icons.home, size: 24.0)),
         ],
       ),
     );
