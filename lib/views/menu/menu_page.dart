@@ -1,10 +1,13 @@
 import 'package:estudos/components/footer.dart';
 import 'package:estudos/components/header.dart';
 import 'package:estudos/components/menu_button.dart';
+import 'package:estudos/models/router_names.dart';
 import 'package:estudos/views/image_upload/image_upload_page.dart';
 import 'package:flutter/material.dart';
 
 class MenuPage extends StatelessWidget {
+  const MenuPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -24,12 +27,12 @@ class MenuPage extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 child: Header(
                   title: 'Menu',
-                  onAvatarTap: () => Navigator.pushNamed(context, '/perfil'),
+                  onAvatarTap: () => Navigator.pushNamed(context, routePaths[RouteNames.profile]!),
 
                 ),
               ),
             ),
-            Expanded(
+             Expanded(
               child: Center(
                 child: Wrap(
                   spacing: 20,
@@ -39,22 +42,22 @@ class MenuPage extends StatelessWidget {
                     MenuButton(
                       label: 'PDF',
                       icon: Icons.picture_as_pdf,
-                      routeName: '/pdf',
+                      routeName: routePaths[RouteNames.pdf]!,
                     ),
                     MenuButton(
                       label: 'Excel',
                       icon: Icons.table_chart,
-                      routeName: '/excel',
+                      routeName: routePaths[RouteNames.excel]!,
                     ),
                     MenuButton(
                       label: 'Forms',
                       icon: Icons.format_align_left,
-                      routeName: '/forms',
+                      routeName: routePaths[RouteNames.forms]!,
                     ),
                     MenuButton(
                       label: 'Gráficos',
                       icon: Icons.pie_chart_outline,
-                      routeName: '/graphics',
+                      routeName: routePaths[RouteNames.graphics]!,
                     ),
                   ],
                 ),

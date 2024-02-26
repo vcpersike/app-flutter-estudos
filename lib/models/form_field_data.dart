@@ -18,6 +18,8 @@ class FormFieldData {
 
 
   final bool isSpecial;
+   final bool isPasswordField;
+  bool isPasswordVisible;
 
   FormFieldData({
     TextEditingController? controller,
@@ -33,6 +35,8 @@ class FormFieldData {
     this.radioValue,
     this.isChecked,
     this.isSpecial = false,
+    this.isPasswordField = false,
+    this.isPasswordVisible = false,
   })  : this.controller = controller ?? TextEditingController(),
         this.maskedController =
             mask != null ? MaskedTextController(mask: mask) : null;
@@ -74,6 +78,18 @@ class FormFieldData {
       FormFieldData(
         label: label,
         isChecked: isChecked,
+        isSpecial: isSpecial,
+      );
+
+  factory FormFieldData.password({
+    required String label,
+    required String? Function(String?) validator,
+    bool isSpecial = false,
+  }) =>
+      FormFieldData(
+        label: label,
+        validator: validator,
+        isPasswordField: true,
         isSpecial: isSpecial,
       );
 }

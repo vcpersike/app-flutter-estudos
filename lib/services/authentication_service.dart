@@ -1,47 +1,60 @@
-// import 'package:openid_client/openid_client.dart';
-// import 'package:openid_client/openid_client_io.dart';
-// import 'package:http/http.dart' as http;
+import 'package:estudos/DB/db_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-// class AuthenticationService {
-//   Future<bool> login(String email, String password) async {
-//     try {
-//       var issuer = await Issuer.discover(Uri.parse('https://teste-de-login.caprover.gamboasolutions.com.br/realms/app-teste/broker/keycloak-oidc/endpoint'));
-//       var client = Client(issuer, '<clientId>');
-
-//       // Cria um autenticador
-//       var authenticator = Authenticator(client, scopes: ['openid', 'profile']);
-
-//       // Abre o navegador para realizar o login
-//       var c = await authenticator.authorize(); // Isso abrirá o navegador para o login
-
-//       // Fecha o navegador após a autenticação
-//       void closeWebView() {
-//         // Add your implementation here
-//       }
-
-//       // Você pode agora obter as informações do token ou do usuário
-//       var tokenResponse = await c.getTokenResponse();
-
-//       // O ideal é verificar a validade do token e extrair as informações necessárias dele
-//       var userInfo = await c.getUserInfo();
-
-//       // Aqui você pode realizar as verificações necessárias com as informações do usuário
-//       // Por exemplo, verificar se o e-mail recebido corresponde ao esperado
-
-//       return true;
-//     } catch (e) {
-//       print("Erro ao realizar o login: $e");
-//       return false;
-//     }
-//   }
-// }
 class AuthenticationService {
-  // Simulando uma chamada de API para login
-  Future<bool> login(String email, String password) async {
-    // Aqui, você faria a lógica de autenticação, como chamar uma API web.
-    // Para este exemplo, vamos apenas simular uma autenticação bem-sucedida.
-    await Future.delayed(const Duration(seconds: 1));
-    return email == 'user@example.com' && password == 'password';
+  final FirebaseAuth _firebaseAuth;
+  AuthenticationService(this._firebaseAuth);
+
+
+  Future<String?> signIn({required String email, required String password}) async {
+    try {
+      await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+      return null;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        return 'Nenhum usuário encontrado para esse e-mail.';
+      } else if (e.code == 'wrong-password') {
+        return 'Senha incorreta fornecida para esse e-mail.';
+      }
+      return e.message;
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+ Future<String?> signUp({required String email, required String password, required String fullName}) async {
+    try {
+      UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+
+      FirebaseFirestore firestore = DBFirestore.get();
+
+      await firestore.collection('users').doc(userCredential.user!.uid).set({
+        'fullName': fullName,
+        'email': email,
+        'accountCreated': FieldValue.serverTimestamp(),
+        // Você pode adicionar mais campos conforme necessário
+      });
+
+      return null;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        return 'A senha fornecida é muito fraca.';
+      } else if (e.code == 'email-already-in-use') {
+        return 'Já existe uma conta com esse endereço de e-mail.';
+      }
+      return e.message;
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  Future<void> signOut() async {
+    await _firebaseAuth.signOut();
+  }
+
+  Future<bool> isAuthenticated() async {
+    var user = _firebaseAuth.currentUser;
+    return user != null;
   }
 }
-

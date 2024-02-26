@@ -1,4 +1,4 @@
-import 'package:estudos/models/form_fiel_data.dart';
+import 'package:estudos/models/form_field_data.dart';
 import 'package:estudos/models/form_field_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,10 +9,10 @@ class DynamicFormComponent extends StatefulWidget {
   final Function(Map<String, String>) onFormSubmit;
 
   const DynamicFormComponent({
-    Key? key,
+    super.key,
     this.includeFields,
     required this.onFormSubmit,
-  }) : super(key: key);
+  });
 
   @override
   _DynamicFormComponentState createState() => _DynamicFormComponentState();
@@ -34,34 +34,54 @@ class _DynamicFormComponentState extends State<DynamicFormComponent> {
   }
 
   void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      Map<String, String> formData = {};
-      for (var field in _fields) {
-        if (field.label == FormFieldNames.cpf || field.label == FormFieldNames.telefone) {
-          String unmaskedValue =
-              field.effectiveController.text.replaceAll(RegExp(r'[^0-9]'), '');
-          formData[field.label] = unmaskedValue;
-        } else {
-          formData[field.label] = field.effectiveController.text;
-        }
+  if (_formKey.currentState!.validate()) {
+    Map<String, String> formData = {};
 
-        if (field.selectedDate != null) {
-          formData["Data de Nascimento"] =
-              DateFormat('dd-MM-yyyy').format(field.selectedDate!);
+    for (var field in _fields) {
+      // Para campos de texto e senha
+      if (field.label == FormFieldNames.nome ||
+          field.label == FormFieldNames.email ||
+          field.label == FormFieldNames.username ||
+          field.label == FormFieldNames.descricao) {
+        formData[field.label] = field.effectiveController.text;
+      }
+
+      // Para CPF e Telefone, removendo máscaras
+      if (field.label == FormFieldNames.cpf || field.label == FormFieldNames.telefone) {
+        String unmaskedValue = field.effectiveController.text.replaceAll(RegExp(r'[^0-9]'), '');
+        formData[field.label] = unmaskedValue;
+      }
+
+      // Para o campo de senha (se você adicionar a lógica de isPasswordField ao FormFieldData)
+      if (field.isPasswordField == true) {
+        formData[field.label] = field.effectiveController.text; // Considere a criptografia ou validação adequada
+      }
+
+      // Para Data de Nascimento
+      if (field.selectedDate != null) {
+        formData["Data de Nascimento"] = DateFormat('dd-MM-yyyy').format(field.selectedDate!);
+      }
+
+      // Para Aceitar Termos (checkbox)
+      if (field.isChecked != null) {
+        formData["Aceitar Termos"] = field.isChecked!.toString();
+      }
+
+      // Para campos de rádio como Gênero e Etapas de Desenvolvimento
+      if (field.radioValue != null) {
+        if (field.label == FormFieldNames.genero) {
+          formData["Gênero"] = field.radioValue!;
         }
-        if (field.isChecked != null) {
-          formData["isChecked"] = field.isChecked!.toString();
-        }
-        if (field.radioValue != null) {
-          formData["radioValue"] = field.radioValue!;
-        }
-        if (field.radioValue != null) {
+        if (field.label == FormFieldNames.etapasDesenvolvimento) {
           formData["Etapas de Desenvolvimento"] = field.radioValue!;
         }
       }
-      widget.onFormSubmit(formData);
     }
+
+    widget.onFormSubmit(formData);
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -125,19 +145,16 @@ class _DynamicFormComponentState extends State<DynamicFormComponent> {
           }
         }).toList()
           ..add(Padding(
-            padding:
-                buttonPadding,
+            padding: buttonPadding,
             child: SizedBox(
-              width: double
-                  .infinity,
+              width: double.infinity,
               height: 36.0,
               child: ElevatedButton(
                 onPressed: _submitForm,
                 child: const Text('Submit'),
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                        8),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
               ),
@@ -182,6 +199,19 @@ class _DynamicFormComponentState extends State<DynamicFormComponent> {
           if (!value.contains('@')) return 'Insira um email válido';
           return null;
         },
+      ),
+      FormFieldData(
+        label: "Nome de usuário",
+        validator: (value) => value != null && value.isNotEmpty
+            ? null
+            : 'Nome de usuário é obrigatório',
+        controller: TextEditingController(),
+      ),
+      FormFieldData.password(
+        label: "Senha",
+        validator: (value) => value != null && value.length >= 6
+            ? null
+            : 'A senha deve ter pelo menos 8 caracteres',
       ),
       FormFieldData(
         controller: TextEditingController(),

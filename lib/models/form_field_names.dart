@@ -1,7 +1,8 @@
-// Definição do enum e do mapa
 enum FormFieldNames {
   nome,
   email,
+  username,
+  password,
   cpf,
   telefone,
   descricao,
@@ -14,6 +15,8 @@ enum FormFieldNames {
 const Map<FormFieldNames, String> formFieldLabels = {
   FormFieldNames.nome: "Nome",
   FormFieldNames.email: "Email",
+  FormFieldNames.username: "Username",
+  FormFieldNames.password: "Senha",
   FormFieldNames.cpf: "CPF",
   FormFieldNames.telefone: "Telefone",
   FormFieldNames.descricao: "Descrição",
