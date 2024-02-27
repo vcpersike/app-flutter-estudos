@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:estudos/components/footer.dart';
 import 'package:estudos/components/header.dart';
-import 'package:estudos/services/image_upload_service.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 

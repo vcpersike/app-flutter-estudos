@@ -1,3 +1,4 @@
+import 'package:estudos/firebase_options.dart';
 import 'package:estudos/models/router_names.dart';
 import 'package:estudos/services/authentication_service.dart';
 import 'package:estudos/views/login/cadastro_login_page.dart';
@@ -18,7 +19,9 @@ import 'package:estudos/views/pdf/pdf_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const GamboaApp());
 }
 
