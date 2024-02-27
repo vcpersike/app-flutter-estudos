@@ -1,5 +1,6 @@
 import 'package:estudos/components/footer.dart';
 import 'package:estudos/components/header.dart';
+import 'package:estudos/models/forms/utils_names/router_names_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -14,7 +15,7 @@ class GraphicsPage extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 child: Header(title: 'Gráficos',
                 onBack: () => Navigator.pop(context),
-                onAvatarTap: () => Navigator.pushNamed(context, '/perfil'),
+                onAvatarTap: () => Navigator.pushNamed(context, routePaths[RouteNames.profile]!),
                 ),
               ),
             ),

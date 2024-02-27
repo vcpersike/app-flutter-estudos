@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:estudos/components/footer.dart';
 import 'package:estudos/components/header.dart';
+import 'package:estudos/models/forms/utils_names/router_names_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -32,7 +33,7 @@ class _ImageUploadPageState extends State<ImageUploadPage> {
                 padding: EdgeInsets.zero,
                 child: Header(title: 'Imagem Upload',
                 onBack: () => Navigator.pop(context),
-                onAvatarTap: () => Navigator.pushNamed(context, '/perfil'),
+                onAvatarTap: () => Navigator.pushNamed(context, routePaths[RouteNames.profile]!),
                 ),
               ),
             ),
