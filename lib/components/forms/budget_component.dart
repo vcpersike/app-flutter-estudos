@@ -1,6 +1,6 @@
 // ignore_for_file: unrelated_type_equality_checks, library_private_types_in_public_api
 
-import 'package:estudos/models/forms/budget_field_model.dart';
+import 'package:estudos/models/forms/generic_forms_field_data.dart';
 import 'package:estudos/models/forms/utils_names/buget_field_name.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -21,7 +21,7 @@ class DynamicBudgetComponent extends StatefulWidget {
 
 class _DynamicBudgetComponentState extends State<DynamicBudgetComponent> {
   final _formKey = GlobalKey<FormState>();
-  List<BudgetFieldData> _fields = [];
+  List<GenericFormsFieldData> _fields = [];
 
   @override
   void initState() {
@@ -54,7 +54,7 @@ class _DynamicBudgetComponentState extends State<DynamicBudgetComponent> {
           formData[field.label] = unmaskedValue;
         }
 
-        // Para o campo de senha (se você adicionar a lógica de isPasswordField ao BudgetFieldData)
+        // Para o campo de senha (se você adicionar a lógica de isPasswordField ao GenericFormsFieldData)
         if (field.isPasswordField == true) {
           formData[field.label] = field.effectiveController
               .text; // Considere a criptografia ou validação adequada
@@ -93,7 +93,7 @@ class _DynamicBudgetComponentState extends State<DynamicBudgetComponent> {
     return Form(
       key: _formKey,
       child: Column(
-        children: _fields.map<Widget>((BudgetFieldData field) {
+        children: _fields.map<Widget>((GenericFormsFieldData field) {
           if (field.radioOptions != null && field.radioValue != null) {
             return Column(
               children: [
@@ -162,7 +162,7 @@ class _DynamicBudgetComponentState extends State<DynamicBudgetComponent> {
     );
   }
 
-  void _selectDate(BudgetFieldData field) async {
+  void _selectDate(GenericFormsFieldData field) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: field.selectedDate ?? DateTime.now(),
@@ -179,15 +179,15 @@ class _DynamicBudgetComponentState extends State<DynamicBudgetComponent> {
     }
   }
 
-  List<BudgetFieldData> createFormFields({List<String>? includeFields}) {
-    List<BudgetFieldData> allFields = [
-      BudgetFieldData(
+  List<GenericFormsFieldData> createFormFields({List<String>? includeFields}) {
+    List<GenericFormsFieldData> allFields = [
+      GenericFormsFieldData(
         controller: TextEditingController(),
         label: "Nome",
         validator: (value) =>
             value != null && value.isNotEmpty ? null : 'Nome é obrigatório',
       ),
-      BudgetFieldData(
+      GenericFormsFieldData(
         controller: TextEditingController(),
         label: "Email",
         keyboardType: TextInputType.emailAddress,
@@ -197,20 +197,20 @@ class _DynamicBudgetComponentState extends State<DynamicBudgetComponent> {
           return null;
         },
       ),
-      BudgetFieldData(
+      GenericFormsFieldData(
         label: "Nome de usuário",
         validator: (value) => value != null && value.isNotEmpty
             ? null
             : 'Nome de usuário é obrigatório',
         controller: TextEditingController(),
       ),
-      BudgetFieldData.password(
+      GenericFormsFieldData.password(
         label: "Senha",
         validator: (value) => value != null && value.length >= 6
             ? null
             : 'A senha deve ter pelo menos 8 caracteres',
       ),
-      BudgetFieldData(
+      GenericFormsFieldData(
         controller: TextEditingController(),
         mask: "000.000.000-00",
         label: "CPF",
@@ -220,7 +220,7 @@ class _DynamicBudgetComponentState extends State<DynamicBudgetComponent> {
           return numericValue.length == 11 ? null : 'CPF deve ter 11 dígitos';
         },
       ),
-      BudgetFieldData(
+      GenericFormsFieldData(
         controller: TextEditingController(),
         mask: "(00)00000-0000",
         label: "Telefone",
@@ -228,7 +228,7 @@ class _DynamicBudgetComponentState extends State<DynamicBudgetComponent> {
         validator: (value) =>
             value != null && value.isNotEmpty ? null : 'Telefone é obrigatório',
       ),
-      BudgetFieldData(
+      GenericFormsFieldData(
         controller: TextEditingController(),
         label: "Descrição",
         maxLength: 700,
@@ -238,16 +238,16 @@ class _DynamicBudgetComponentState extends State<DynamicBudgetComponent> {
             ? null
             : 'Descrição é obrigatória',
       ),
-      BudgetFieldData.radio(
+      GenericFormsFieldData.radio(
         label: "Etapas de Desenvolvimento",
         options: ["Front", "Back", "Mobile"],
         radioValue: "",
       ),
-      BudgetFieldData.checkbox(
+      GenericFormsFieldData.checkbox(
         label: "Aceitar Termos",
         isChecked: false,
       ),
-      BudgetFieldData.date(
+      GenericFormsFieldData.date(
         label: "Data de Nascimento",
         selectedDate: DateTime.now(),
         onDateSelected: (DateTime date) {},
