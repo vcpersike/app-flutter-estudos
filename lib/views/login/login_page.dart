@@ -1,8 +1,7 @@
-
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
-import 'package:estudos/models/form_field_names.dart';
-import 'package:estudos/models/router_names.dart';
+import 'package:estudos/models/forms/utils_names/generic_forms_field_names.dart';
+import 'package:estudos/models/forms/utils_names/router_names_model.dart';
 import 'package:flutter/material.dart';
 import 'package:estudos/viewmodels/login_viewmodel.dart';
 
@@ -47,26 +46,20 @@ class _LoginPageState extends State<LoginPage> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(bottom: 40.0),
-                child: Icon(
-                    Icons
-                        .rocket_launch,
-                    size: 100.0,
-                    color: Theme.of(context)
-                        .primaryColor
-                    ),
+                child: Icon(Icons.rocket_launch,
+                    size: 100.0, color: Theme.of(context).primaryColor),
               ),
-
               TextField(
                 controller: _emailController,
                 decoration: InputDecoration(
-                    labelText: formFieldLabels[FormFieldNames.email]),
+                    labelText: formFieldLabels[GenericFormsFieldNames.email]),
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 20),
               TextField(
                 controller: _passwordController,
                 decoration: InputDecoration(
-                    labelText: formFieldLabels[FormFieldNames.password]),
+                    labelText: formFieldLabels[GenericFormsFieldNames.password]),
                 obscureText: true,
               ),
               const SizedBox(height: 40),

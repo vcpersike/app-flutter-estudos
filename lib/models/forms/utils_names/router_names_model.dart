@@ -1,8 +1,8 @@
 enum RouteNames {
   login,
   menu,
-  excel,
-  pdf,
+  sprint,
+  registerClient,
   forms,
   graphics,
   imageUpload,
@@ -13,8 +13,8 @@ enum RouteNames {
 const Map<RouteNames, String> routePaths = {
   RouteNames.login: '/',
   RouteNames.menu: '/menu',
-  RouteNames.excel: '/excel',
-  RouteNames.pdf: '/pdf',
+  RouteNames.sprint: '/sprint',
+  RouteNames.registerClient: '/register_client',
   RouteNames.forms: '/forms',
   RouteNames.graphics: '/graphics',
   RouteNames.imageUpload: '/imageUpload',

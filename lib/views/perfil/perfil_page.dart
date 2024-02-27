@@ -1,5 +1,5 @@
 import 'package:estudos/components/footer.dart';
-import 'package:estudos/models/router_names.dart';
+import 'package:estudos/models/forms/utils_names/router_names_model.dart';
 import 'package:estudos/services/authentication_service.dart';
 import 'package:estudos/viewmodels/login_viewmodel.dart';
 import 'package:flutter/material.dart';

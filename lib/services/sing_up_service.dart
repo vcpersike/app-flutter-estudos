@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:estudos/models/register_field.dart';
+import 'package:estudos/models/forms/user_sing_up_model.dart';
 
-class UserService {
+class SingUpService {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
-  Future<void> addRegister(UserRegister user) async {
+  Future<void> addSingUp(UserSingUp user) async {
     try {
       await _firebaseFirestore.collection('users').add({
         'nome': user.nome,

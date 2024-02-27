@@ -1,7 +1,7 @@
 import 'package:estudos/components/footer.dart';
 import 'package:estudos/components/header.dart';
 import 'package:estudos/components/menu_button.dart';
-import 'package:estudos/models/router_names.dart';
+import 'package:estudos/models/forms/utils_names/router_names_model.dart';
 import 'package:estudos/views/image_upload/image_upload_page.dart';
 import 'package:flutter/material.dart';
 
@@ -42,12 +42,12 @@ class MenuPage extends StatelessWidget {
                     MenuButton(
                       label: 'PDF',
                       icon: Icons.picture_as_pdf,
-                      routeName: routePaths[RouteNames.pdf]!,
+                      routeName: routePaths[RouteNames.registerClient]!,
                     ),
                     MenuButton(
                       label: 'Excel',
                       icon: Icons.table_chart,
-                      routeName: routePaths[RouteNames.excel]!,
+                      routeName: routePaths[RouteNames.sprint]!,
                     ),
                     MenuButton(
                       label: 'Forms',

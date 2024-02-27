@@ -1,4 +1,4 @@
-class UserRegister {
+class UserSingUp {
   String nome;
   String telefone;
   String cpf;
@@ -6,7 +6,7 @@ class UserRegister {
   String genero;
   bool aceitaTermos;
 
-  UserRegister({
+  UserSingUp({
     required this.nome,
     required this.telefone,
     required this.cpf,

@@ -1,16 +1,16 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, no_leading_underscores_for_local_identifiers
 
-import 'package:estudos/models/router_names.dart';
+import 'package:estudos/components/forms/register_client_component.dart';
+import 'package:estudos/models/forms/utils_names/router_names_model.dart';
 import 'package:estudos/viewmodels/login_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:estudos/components/forms_component.dart';
 import 'package:estudos/components/header.dart';
-import 'package:estudos/models/form_field_names.dart';
+import 'package:estudos/models/forms/utils_names/generic_forms_field_names.dart';
 import 'package:estudos/services/authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class PdfPage extends StatelessWidget {
-  const PdfPage({super.key});
+class RegisterClientPage extends StatelessWidget {
+  const RegisterClientPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +28,9 @@ class PdfPage extends StatelessWidget {
           return _buildAuthenticatedContent(context);
         } else {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.pushReplacementNamed(context, '/');
+            Navigator.pushReplacementNamed(context, routePaths[RouteNames.login]!);
           });
-          return SizedBox.shrink();
+          return const SizedBox.shrink();
         }
       },
     );
@@ -43,23 +43,23 @@ class PdfPage extends StatelessWidget {
           child: Column(
             children: [
               Header(
-                title: 'PDF',
+                title: 'Registro de Cliente',
                 onBack: () => Navigator.pop(context),
                 onAvatarTap: () =>
                     Navigator.pushNamed(context, routePaths[RouteNames.profile]!),
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: DynamicFormComponent(
+                child: DynamicRegisterClientComponent(
                   includeFields: const [
-                    FormFieldNames.nome,
-                    FormFieldNames.email,
-                    FormFieldNames.cpf,
-                    FormFieldNames.telefone,
-                    FormFieldNames.dataNascimento,
-                    FormFieldNames.descricao,
-                    FormFieldNames.etapasDesenvolvimento,
-                    FormFieldNames.aceitarTermos,
+                    GenericFormsFieldNames.nome,
+                    GenericFormsFieldNames.email,
+                    GenericFormsFieldNames.cpf,
+                    GenericFormsFieldNames.telefone,
+                    GenericFormsFieldNames.dataNascimento,
+                    GenericFormsFieldNames.descricao,
+                    GenericFormsFieldNames.etapasDesenvolvimento,
+                    GenericFormsFieldNames.aceitarTermos,
                   ].map((e) => formFieldLabels[e]!).toList(),
                   onFormSubmit: (Map<String, String> formData) {
                     print(

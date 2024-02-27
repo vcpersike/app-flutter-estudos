@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 
-class FormFieldData {
+class GenericFormsFieldData {
   TextEditingController? controller;
   MaskedTextController? maskedController;
   final String label;
@@ -21,7 +21,7 @@ class FormFieldData {
    final bool isPasswordField;
   bool isPasswordVisible;
 
-  FormFieldData({
+  GenericFormsFieldData({
     TextEditingController? controller,
     String? mask,
     required this.label,
@@ -44,49 +44,49 @@ class FormFieldData {
   TextEditingController get effectiveController =>
       maskedController ?? controller ?? TextEditingController();
 
-  factory FormFieldData.date({
+  factory GenericFormsFieldData.date({
     required String label,
     required DateTime selectedDate,
     required Function(DateTime) onDateSelected,
     bool isSpecial = false,
   }) =>
-      FormFieldData(
+      GenericFormsFieldData(
         label: label,
         selectedDate: selectedDate,
         onDateSelected: onDateSelected,
         isSpecial: isSpecial,
       );
 
-  factory FormFieldData.radio({
+  factory GenericFormsFieldData.radio({
     required String label,
     required List<String> options,
     required String radioValue,
     bool isSpecial = false,
   }) =>
-      FormFieldData(
+      GenericFormsFieldData(
         label: label,
         radioOptions: options,
         radioValue: radioValue,
         isSpecial: isSpecial,
       );
 
-  factory FormFieldData.checkbox({
+  factory GenericFormsFieldData.checkbox({
     required String label,
     required bool isChecked,
     bool isSpecial = false,
   }) =>
-      FormFieldData(
+      GenericFormsFieldData(
         label: label,
         isChecked: isChecked,
         isSpecial: isSpecial,
       );
 
-  factory FormFieldData.password({
+  factory GenericFormsFieldData.password({
     required String label,
     required String? Function(String?) validator,
     bool isSpecial = false,
   }) =>
-      FormFieldData(
+      GenericFormsFieldData(
         label: label,
         validator: validator,
         isPasswordField: true,

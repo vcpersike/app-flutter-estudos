@@ -1,6 +1,8 @@
-import 'package:estudos/models/form_field_names.dart';
-import 'package:estudos/models/router_names.dart';
-import 'package:estudos/viewmodels/cadastro_login_viewmodel.dart';
+// ignore_for_file: use_build_context_synchronously, prefer_const_constructors, sort_child_properties_last, library_private_types_in_public_api
+
+import 'package:estudos/models/forms/utils_names/generic_forms_field_names.dart';
+import 'package:estudos/models/forms/utils_names/router_names_model.dart';
+import 'package:estudos/viewmodels/sign_up_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:estudos/services/authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -36,7 +38,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Cadastro')),
+      appBar: AppBar(title: const Text('Cadastro')),
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
@@ -50,24 +52,24 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 _buildTextField(
                   controller: _fullNameController,
-                  label: formFieldLabels[FormFieldNames.nome]!,
+                  label: formFieldLabels[GenericFormsFieldNames.nome]!,
                 ),
                 _buildTextField(
                   controller: _emailController,
-                  label: formFieldLabels[FormFieldNames.email]!,
+                  label: formFieldLabels[GenericFormsFieldNames.email]!,
                   keyboardType: TextInputType.emailAddress,
                 ),
                 _buildTextField(
                   controller: _passwordController,
-                  label: formFieldLabels[FormFieldNames.password]!,
+                  label: formFieldLabels[GenericFormsFieldNames.password]!,
                   obscureText: true,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: _signUp,
                   child: Text('Cadastrar'),
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size(double.infinity, 36),
+                    minimumSize: const Size(double.infinity, 36),
                   ),
                 ),
               ],

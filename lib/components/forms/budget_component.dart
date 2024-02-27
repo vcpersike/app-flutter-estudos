@@ -1,27 +1,27 @@
-import 'package:estudos/models/form_field_data.dart';
-import 'package:estudos/models/form_field_names.dart';
+// ignore_for_file: unrelated_type_equality_checks, library_private_types_in_public_api
+
+import 'package:estudos/models/forms/budget_field_model.dart';
+import 'package:estudos/models/forms/utils_names/buget_field_name.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
-class DynamicFormComponent extends StatefulWidget {
+class DynamicBudgetComponent extends StatefulWidget {
   final List<String>? includeFields;
   final Function(Map<String, String>) onFormSubmit;
 
-  const DynamicFormComponent({
+  const DynamicBudgetComponent({
     super.key,
     this.includeFields,
     required this.onFormSubmit,
   });
 
   @override
-  _DynamicFormComponentState createState() => _DynamicFormComponentState();
+  _DynamicBudgetComponentState createState() => _DynamicBudgetComponentState();
 }
 
-class _DynamicFormComponentState extends State<DynamicFormComponent> {
+class _DynamicBudgetComponentState extends State<DynamicBudgetComponent> {
   final _formKey = GlobalKey<FormState>();
-  List<FormFieldData> _fields = [];
-  String _selectedGender = 'Masculino';
+  List<BudgetFieldData> _fields = [];
 
   @override
   void initState() {
@@ -34,54 +34,53 @@ class _DynamicFormComponentState extends State<DynamicFormComponent> {
   }
 
   void _submitForm() {
-  if (_formKey.currentState!.validate()) {
-    Map<String, String> formData = {};
+    if (_formKey.currentState!.validate()) {
+      Map<String, String> formData = {};
 
-    for (var field in _fields) {
-      // Para campos de texto e senha
-      if (field.label == FormFieldNames.nome ||
-          field.label == FormFieldNames.email ||
-          field.label == FormFieldNames.username ||
-          field.label == FormFieldNames.descricao) {
-        formData[field.label] = field.effectiveController.text;
-      }
-
-      // Para CPF e Telefone, removendo máscaras
-      if (field.label == FormFieldNames.cpf || field.label == FormFieldNames.telefone) {
-        String unmaskedValue = field.effectiveController.text.replaceAll(RegExp(r'[^0-9]'), '');
-        formData[field.label] = unmaskedValue;
-      }
-
-      // Para o campo de senha (se você adicionar a lógica de isPasswordField ao FormFieldData)
-      if (field.isPasswordField == true) {
-        formData[field.label] = field.effectiveController.text; // Considere a criptografia ou validação adequada
-      }
-
-      // Para Data de Nascimento
-      if (field.selectedDate != null) {
-        formData["Data de Nascimento"] = DateFormat('dd-MM-yyyy').format(field.selectedDate!);
-      }
-
-      // Para Aceitar Termos (checkbox)
-      if (field.isChecked != null) {
-        formData["Aceitar Termos"] = field.isChecked!.toString();
-      }
-
-      // Para campos de rádio como Gênero e Etapas de Desenvolvimento
-      if (field.radioValue != null) {
-        if (field.label == FormFieldNames.genero) {
-          formData["Gênero"] = field.radioValue!;
+      for (var field in _fields) {
+        // Para campos de texto e senha
+        if (field.label == BudgetFieldNames.nome ||
+            field.label == BudgetFieldNames.email ||
+            field.label == BudgetFieldNames.username ||
+            field.label == BudgetFieldNames.descricao) {
+          formData[field.label] = field.effectiveController.text;
         }
-        if (field.label == FormFieldNames.etapasDesenvolvimento) {
+
+        // Para CPF e Telefone, removendo máscaras
+        if (field.label == BudgetFieldNames.cpf ||
+            field.label == BudgetFieldNames.telefone) {
+          String unmaskedValue =
+              field.effectiveController.text.replaceAll(RegExp(r'[^0-9]'), '');
+          formData[field.label] = unmaskedValue;
+        }
+
+        // Para o campo de senha (se você adicionar a lógica de isPasswordField ao BudgetFieldData)
+        if (field.isPasswordField == true) {
+          formData[field.label] = field.effectiveController
+              .text; // Considere a criptografia ou validação adequada
+        }
+
+        // Para Data de Nascimento
+        if (field.selectedDate != null) {
+          formData["Data de Nascimento"] =
+              DateFormat('dd-MM-yyyy').format(field.selectedDate!);
+        }
+
+        // Para Aceitar Termos (checkbox)
+        if (field.isChecked != null) {
+          formData["Aceitar Termos"] = field.isChecked!.toString();
+        }
+
+        // Para campos de rádio como Gênero e Etapas de Desenvolvimento
+
+        if (field.label == BudgetFieldNames.etapasDesenvolvimento) {
           formData["Etapas de Desenvolvimento"] = field.radioValue!;
         }
       }
+
+      widget.onFormSubmit(formData);
     }
-
-    widget.onFormSubmit(formData);
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -94,23 +93,21 @@ class _DynamicFormComponentState extends State<DynamicFormComponent> {
     return Form(
       key: _formKey,
       child: Column(
-        children: _fields.map<Widget>((FormFieldData field) {
+        children: _fields.map<Widget>((BudgetFieldData field) {
           if (field.radioOptions != null && field.radioValue != null) {
             return Column(
               children: [
                 Text(field.label),
-                ...field.radioOptions!
-                    .map((option) => RadioListTile<String>(
-                          title: Text(option),
-                          value: option,
-                          groupValue: field.radioValue,
-                          onChanged: (String? value) {
-                            setState(() {
-                              field.radioValue = value;
-                            });
-                          },
-                        ))
-                    .toList(),
+                ...field.radioOptions!.map((option) => RadioListTile<String>(
+                      title: Text(option),
+                      value: option,
+                      groupValue: field.radioValue,
+                      onChanged: (String? value) {
+                        setState(() {
+                          field.radioValue = value;
+                        });
+                      },
+                    ))
               ],
             );
           } else if (field.isChecked != null) {
@@ -151,7 +148,7 @@ class _DynamicFormComponentState extends State<DynamicFormComponent> {
               height: 36.0,
               child: ElevatedButton(
                 onPressed: _submitForm,
-                child: const Text('Submit'),
+                child: Text('Enviar'),
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -165,7 +162,7 @@ class _DynamicFormComponentState extends State<DynamicFormComponent> {
     );
   }
 
-  void _selectDate(FormFieldData field) async {
+  void _selectDate(BudgetFieldData field) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: field.selectedDate ?? DateTime.now(),
@@ -182,15 +179,15 @@ class _DynamicFormComponentState extends State<DynamicFormComponent> {
     }
   }
 
-  List<FormFieldData> createFormFields({List<String>? includeFields}) {
-    List<FormFieldData> allFields = [
-      FormFieldData(
+  List<BudgetFieldData> createFormFields({List<String>? includeFields}) {
+    List<BudgetFieldData> allFields = [
+      BudgetFieldData(
         controller: TextEditingController(),
         label: "Nome",
         validator: (value) =>
             value != null && value.isNotEmpty ? null : 'Nome é obrigatório',
       ),
-      FormFieldData(
+      BudgetFieldData(
         controller: TextEditingController(),
         label: "Email",
         keyboardType: TextInputType.emailAddress,
@@ -200,20 +197,20 @@ class _DynamicFormComponentState extends State<DynamicFormComponent> {
           return null;
         },
       ),
-      FormFieldData(
+      BudgetFieldData(
         label: "Nome de usuário",
         validator: (value) => value != null && value.isNotEmpty
             ? null
             : 'Nome de usuário é obrigatório',
         controller: TextEditingController(),
       ),
-      FormFieldData.password(
+      BudgetFieldData.password(
         label: "Senha",
         validator: (value) => value != null && value.length >= 6
             ? null
             : 'A senha deve ter pelo menos 8 caracteres',
       ),
-      FormFieldData(
+      BudgetFieldData(
         controller: TextEditingController(),
         mask: "000.000.000-00",
         label: "CPF",
@@ -223,7 +220,7 @@ class _DynamicFormComponentState extends State<DynamicFormComponent> {
           return numericValue.length == 11 ? null : 'CPF deve ter 11 dígitos';
         },
       ),
-      FormFieldData(
+      BudgetFieldData(
         controller: TextEditingController(),
         mask: "(00)00000-0000",
         label: "Telefone",
@@ -231,7 +228,7 @@ class _DynamicFormComponentState extends State<DynamicFormComponent> {
         validator: (value) =>
             value != null && value.isNotEmpty ? null : 'Telefone é obrigatório',
       ),
-      FormFieldData(
+      BudgetFieldData(
         controller: TextEditingController(),
         label: "Descrição",
         maxLength: 700,
@@ -241,21 +238,16 @@ class _DynamicFormComponentState extends State<DynamicFormComponent> {
             ? null
             : 'Descrição é obrigatória',
       ),
-      FormFieldData.radio(
-        label: "Gênero",
-        options: ["Masculino", "Feminino"],
-        radioValue: "Masculino",
-      ),
-      FormFieldData.radio(
+      BudgetFieldData.radio(
         label: "Etapas de Desenvolvimento",
         options: ["Front", "Back", "Mobile"],
         radioValue: "",
       ),
-      FormFieldData.checkbox(
+      BudgetFieldData.checkbox(
         label: "Aceitar Termos",
         isChecked: false,
       ),
-      FormFieldData.date(
+      BudgetFieldData.date(
         label: "Data de Nascimento",
         selectedDate: DateTime.now(),
         onDateSelected: (DateTime date) {},
