@@ -46,8 +46,11 @@ class _LoginPageState extends State<LoginPage> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(bottom: 40.0),
-                child: Icon(Icons.rocket_launch,
-                    size: 100.0, color: Theme.of(context).primaryColor),
+                child: Image.asset(
+                  'assets/logos/logo.png',
+                  width: 160.0, // Define a largura da imagem
+                  height: 160.0, // Define a altura da imagem
+                ),
               ),
               TextField(
                 controller: _emailController,
@@ -59,7 +62,8 @@ class _LoginPageState extends State<LoginPage> {
               TextField(
                 controller: _passwordController,
                 decoration: InputDecoration(
-                    labelText: formFieldLabels[GenericFormsFieldNames.password]),
+                    labelText:
+                        formFieldLabels[GenericFormsFieldNames.password]),
                 obscureText: true,
               ),
               const SizedBox(height: 40),

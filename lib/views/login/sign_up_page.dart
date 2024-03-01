@@ -19,7 +19,8 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  final SignUpViewModel _viewModel = SignUpViewModel(AuthenticationService(FirebaseAuth.instance));
+  final SignUpViewModel _viewModel =
+      SignUpViewModel(AuthenticationService(FirebaseAuth.instance));
 
   Future<void> _signUp() async {
     final String? errorMessage = await _viewModel.signUp(
@@ -31,7 +32,8 @@ class _SignUpPageState extends State<SignUpPage> {
     if (errorMessage == null) {
       Navigator.pushReplacementNamed(context, routePaths[RouteNames.login]!);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(errorMessage)));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(errorMessage)));
     }
   }
 
@@ -48,7 +50,11 @@ class _SignUpPageState extends State<SignUpPage> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(bottom: 40.0),
-                  child: Icon(Icons.rocket_launch, size: 100, color: Theme.of(context).primaryColor),
+                  child: Image.asset(
+                    'assets/logos/logo.png',
+                    width: 160.0, // Define a largura da imagem
+                    height: 160.0, // Define a altura da imagem
+                  ),
                 ),
                 _buildTextField(
                   controller: _fullNameController,
